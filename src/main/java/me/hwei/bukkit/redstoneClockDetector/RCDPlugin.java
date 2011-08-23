@@ -3,8 +3,6 @@ package me.hwei.bukkit.redstoneClockDetector;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
