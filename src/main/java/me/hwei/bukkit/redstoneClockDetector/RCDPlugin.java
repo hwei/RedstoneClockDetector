@@ -120,8 +120,6 @@ public class RCDPlugin extends JavaPlugin implements CommandExecutor, Listener, 
 				
 				if(waitingSeconds == 0) {
 					getServer().getScheduler().cancelTask(taskId);
-					redstoneActivityTable.clear();
-					taskId = -1;
 					
 					if(redstoneActivityTable.size() == 0) {
 						sendMessage("No redstone activities found.");
@@ -137,6 +135,9 @@ public class RCDPlugin extends JavaPlugin implements CommandExecutor, Listener, 
 							+ ", y: " + l.getBlockY()
 							+ ", z: " + l.getBlockZ() + " (Redstone activity count: " + acitvityCount + ")...");
 					player.teleport(l);
+					
+					redstoneActivityTable.clear();
+					taskId = -1;
 					
 					return;
 				}
