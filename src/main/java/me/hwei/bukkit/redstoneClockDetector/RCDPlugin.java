@@ -113,6 +113,7 @@ public class RCDPlugin extends JavaPlugin implements CommandExecutor, Listener, 
 				if(player == null) {
 					sendMessage("Player " + playerName + " dose not exists any more.");
 					getServer().getScheduler().cancelTask(taskId);
+					
 					redstoneActivityTable.clear();
 					taskId = -1;
 					return;
@@ -123,6 +124,9 @@ public class RCDPlugin extends JavaPlugin implements CommandExecutor, Listener, 
 					
 					if(redstoneActivityTable.size() == 0) {
 						sendMessage("No redstone activities found.");
+						
+						redstoneActivityTable.clear();
+						taskId = -1;
 						return;
 					}
 					ValueComparator bvc = new ValueComparator(redstoneActivityTable);
@@ -138,7 +142,6 @@ public class RCDPlugin extends JavaPlugin implements CommandExecutor, Listener, 
 					
 					redstoneActivityTable.clear();
 					taskId = -1;
-					
 					return;
 				}
 				
@@ -148,7 +151,7 @@ public class RCDPlugin extends JavaPlugin implements CommandExecutor, Listener, 
 		    }
 		}, 0L, 20L);
 		
-		return false;
+		return true;
 	}
 	
 	@Override
