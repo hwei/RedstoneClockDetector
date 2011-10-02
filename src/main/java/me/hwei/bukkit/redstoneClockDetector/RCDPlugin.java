@@ -93,15 +93,15 @@ public class RCDPlugin extends JavaPlugin implements CommandExecutor, Listener, 
 		this.redstoneActivityTable.clear();
 		
 		this.taskId = this.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			class ValueComparator implements Comparator {
-				Map base;
-				public ValueComparator(Map base) {
+			class ValueComparator implements Comparator<Location> {
+				Map<Location, Integer> base;
+				public ValueComparator(Map<Location, Integer> base) {
 					this.base = base;
 				}
-				public int compare(Object a, Object b) {
-					if((Integer)base.get(a) < (Integer)base.get(b)) {
+				public int compare(Location a, Location b) {
+					if(base.get(a).intValue() < base.get(b).intValue()) {
 						return 1;
-					} else if((Integer)base.get(a) == (Integer)base.get(b)) {
+					} else if(base.get(a).intValue() == base.get(b).intValue()) {
 						return 0;
 					} else {
 						return -1;
@@ -130,7 +130,7 @@ public class RCDPlugin extends JavaPlugin implements CommandExecutor, Listener, 
 						return;
 					}
 					ValueComparator bvc = new ValueComparator(redstoneActivityTable);
-					TreeMap<Location, Integer> sortedMap = new TreeMap(bvc);
+					TreeMap<Location, Integer> sortedMap = new TreeMap<Location, Integer>(bvc);
 					sortedMap.putAll(redstoneActivityTable);
 					Location l = sortedMap.keySet().iterator().next();
 					int acitvityCount = redstoneActivityTable.get(l);
