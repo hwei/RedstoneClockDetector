@@ -1,0 +1,19 @@
+name: RedstoneClockDetector
+main: me.hwei.bukkit.redstoneClockDetector.RCDPlugin
+version: 0.1d
+description: Detect redstone clock and teleport to it.
+author: HWei
+commands:
+  rcd:
+    aliases: redstoneclockdetector
+    description: RedstoneClockDetector plugin by HWei.
+    usage: 
+      !!str "\u00A7a/rcd [sec] [player] \u00A7f\
+      Select the most active block in [sec] seconds (Default: 5). \
+      And tp [player] to that position (Default: yourself)."
+permissions:
+  redstoneclockdetector.*:
+    description: Gives access to use this plugin.
+    default: op
+
+ 
