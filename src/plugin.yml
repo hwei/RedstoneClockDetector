@@ -1,0 +1,33 @@
+name: RedstoneClockDetector
+main: me.hwei.bukkit.redstoneClockDetector.RCDPlugin
+version: 0.2
+description: Detect redstone clock and teleport to it.
+author: HWei
+commands:
+  rcd:
+    aliases: redstoneclockdetector
+    description: Redstone Clock Detector.
+    usage: Type /rcd ? to get more help.
+permissions:
+  redstoneclockdetector.*:
+    description: Gives access to use this plugin.
+    default: op
+    children:
+      redstoneclockdetector: true
+      redstoneclockdetector.start: true
+      redstoneclockdetector.stop: true
+      redstoneclockdetector.list: true
+      redstoneclockdetector.tp: true
+  redstoneclockdetector:
+    description: Show status of plugin.
+  redstoneclockdetector.start:
+    description: Start scan.
+  redstoneclockdetector.stop:
+    description: Stop scan.
+  redstoneclockdetector.list:
+    description: List locations of redstone activities.
+  redstoneclockdetector.tp:
+    description: Teleport a player to a location in list.
+    
+
+ 
