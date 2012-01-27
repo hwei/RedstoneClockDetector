@@ -26,8 +26,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.Event.Priority;
 import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.plugin.EventExecutor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -76,7 +76,7 @@ public class RCDPlugin extends JavaPlugin implements CommandExecutor, Listener, 
 		
 		this.setupCommands();
 		
-		this.getServer().getPluginManager().registerEvent(Event.Type.REDSTONE_CHANGE, this, this, Priority.Normal, this);
+		this.getServer().getPluginManager().registerEvents(this, this);
 	}
 	
 	protected boolean setupCommands() {
@@ -197,6 +197,18 @@ public class RCDPlugin extends JavaPlugin implements CommandExecutor, Listener, 
 		sortedMap.putAll(this.redstoneActivityTable);
 		this.redstoneActivityList.clear();
 		this.redstoneActivityList.addAll(sortedMap.entrySet());
+	}
+	
+	@EventHandler
+	public void onBlockRedstoneChange(BlockRedstoneEvent event)  {
+		if(this.taskId == Integer.MIN_VALUE)
+			return;
+		Location loc = event.getBlock().getLocation();
+		int count = 1;
+		if(this.redstoneActivityTable.containsKey(loc)) {
+			count += this.redstoneActivityTable.get(loc);
+		}
+		this.redstoneActivityTable.put(loc, count);
 	}
 	
 	@Override
