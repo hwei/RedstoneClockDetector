@@ -1,6 +1,7 @@
 name: RedstoneClockDetector
 main: me.hwei.bukkit.redstoneClockDetector.RCDPlugin
-version: 0.2.4
+version: 0.2.6
+
 description: Detect redstone clock and teleport to it.
 author: HWei
 commands:
@@ -18,6 +19,7 @@ permissions:
       redstoneclockdetector.stop: true
       redstoneclockdetector.list: true
       redstoneclockdetector.tp: true
+      redstoneclockdetector.break: true
   redstoneclockdetector:
     description: Show status of plugin.
   redstoneclockdetector.start:
@@ -28,6 +30,8 @@ permissions:
     description: List locations of redstone activities.
   redstoneclockdetector.tp:
     description: Teleport a player to a location in list.
+  redstoneclockdetector.break:
+    description: Break the block at a location in list.
     
 
  

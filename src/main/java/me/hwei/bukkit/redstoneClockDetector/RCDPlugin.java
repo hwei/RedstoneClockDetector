@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import me.hwei.bukkit.redstoneClockDetector.commands.BreakCommand;
 import me.hwei.bukkit.redstoneClockDetector.commands.ListCommand;
 import me.hwei.bukkit.redstoneClockDetector.commands.StartCommand;
 import me.hwei.bukkit.redstoneClockDetector.commands.StatusCommand;
@@ -21,18 +22,17 @@ import me.hwei.bukkit.redstoneClockDetector.util.UsageException;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockRedstoneEvent;
-import org.bukkit.plugin.EventExecutor;
+import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class RCDPlugin extends JavaPlugin implements CommandExecutor, Listener, EventExecutor {
+public class RCDPlugin extends JavaPlugin implements CommandExecutor, Listener {
 
 	@Override
 	public void onDisable() {
@@ -98,6 +98,10 @@ public class RCDPlugin extends JavaPlugin implements CommandExecutor, Listener, 
 					new TeleportCommand(
 							"tp [player] [num]  Teleport player [player] to place of number [num] in list.",
 							"redstoneclockdetector.tp",
+							null, this),
+					new BreakCommand(
+							"break <num>  Break the block at place of number <num> in list.",
+							"redstoneclockdetector.break",
 							null, this),
 			};
 			
@@ -200,28 +204,13 @@ public class RCDPlugin extends JavaPlugin implements CommandExecutor, Listener, 
 	}
 	
 	@EventHandler
-	public void onBlockRedstoneChange(BlockRedstoneEvent event)  {
+	public void onBlockRedstoneChange(BlockPhysicsEvent event)  {
 		if(this.taskId == Integer.MIN_VALUE)
+			return;
+		Block block = event.getBlock();
+		if(block.getBlockPower() == 0)
 			return;
 		Location loc = event.getBlock().getLocation();
-		int count = 1;
-		if(this.redstoneActivityTable.containsKey(loc)) {
-			count += this.redstoneActivityTable.get(loc);
-		}
-		this.redstoneActivityTable.put(loc, count);
-	}
-	
-	@Override
-	public void execute(Listener listener, Event event) {
-		if(this.taskId == Integer.MIN_VALUE)
-			return;
-		BlockRedstoneEvent e = null;
-		if(event instanceof BlockRedstoneEvent) {
-			e = (BlockRedstoneEvent)event;
-		} else {
-			return;
-		}
-		Location loc = e.getBlock().getLocation();
 		int count = 1;
 		if(this.redstoneActivityTable.containsKey(loc)) {
 			count += this.redstoneActivityTable.get(loc);
